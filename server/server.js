@@ -166,7 +166,20 @@ const server = http.createServer((req, res) => {
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(todo));
-    } 
+    } else if (path.startsWith('/todo/complete/') && method === 'GET') {
+      const id = parseInt(path.slice('/todo/complete/'.length));
+      const todo = todos.find((todo) => todo.id === id);
+
+      todo.complete = !todo.complete;
+
+      fs.writeFileSync('./todos.json', JSON.stringify(todos));
+
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(todo));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Not found');
+    }
   });
 });
 
