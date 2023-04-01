@@ -154,6 +154,18 @@ const server = http.createServer((req, res) => {
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(todo));
       });
+    } else if (path.startsWith('/todo/delete/') && method === 'DELETE') {
+      const id = parseInt(path.slice('/todo/delete/'.length));
+      const todo = todos.find((todo) => todo.id === id);
+
+      const index = todos.indexOf(todo);
+
+      todos.splice(index, 1);
+
+      fs.writeFileSync('./todos.json', JSON.stringify(todos));
+
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(todo));
     } 
   });
 });
