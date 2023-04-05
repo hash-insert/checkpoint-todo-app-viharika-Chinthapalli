@@ -31,6 +31,8 @@ function App() {
         }));
     }
 
+      
+
     const deleteTodo = async id => {
         const data  = await fetch(API_BASE + "/todo/delete/" + id, {
             method: "DELETE"
@@ -66,9 +68,8 @@ function App() {
             <div className="todos">
                 {todos.map(todo => (
 
-                <div className={
-                    "todo " + (todo.complete ? "is-complete" : "")} 
-                    key={todo.id} onClick={() => completeTodo(todo.id)}>
+                <div className={"todo " + (todo.complete ? "is-complete" : "")} 
+                     key={todo.id} onClick={() => completeTodo(todo.id)}>
 
                     <div className="checkbox"></div>
 
@@ -78,6 +79,7 @@ function App() {
                     (todo.id)}>x</div>
                 </div>
                 ))}
+
                 {
                     todos.length === 0 ? (
                         <div className="no-todos">No tasks yet!</div>
